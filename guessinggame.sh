@@ -1,17 +1,24 @@
-# This is a sample Python script.
+#!/bin/bash
 
-# Press Maj+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+count_of_files_in_current_directory () {
+  local count_l=(`ls -al|wc`)
+#  local nb_files_dir
+  let nb_files_dir=${count_l[0]}-3 # remove count of "total ??" "." and ".."
+  return $nb_files_dir
+}
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
-/home/ajco7475/dev/coursera_de
+count_of_files_in_current_directory
+nb_files=$?
+not_found="true"
+while [ $not_found ]; do
+  echo "how many files in this directory ? "
+  read user_guess
+  if [ $user_guess -lt $nb_files ]; then
+    echo "There are more files, try again..."
+  elif [ $user_guess -gt $nb_files ]; then
+    echo "There are les files, try again..."
+  else
+    echo "You're correct !"
+    not_found=""
+  fi
+done
